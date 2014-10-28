@@ -11,11 +11,11 @@ class Solution:
                 values[i] = 1
         keys = sorted(values.keys())
 
-        result = self.dfs(keys,values)
+        result = self.constuct(keys,values)
         return result
 
 
-    def dfs(self,keys,values):
+    def constuct(self,keys,values):
         this = []
         for i in range(values[keys[0]] + 1):
             one = []
@@ -24,7 +24,7 @@ class Solution:
             this.append(one)
 
         if len(keys) != 1:
-            suffix = self.dfs(keys[1:],values)    
+            suffix = self.constuct(keys[1:],values)    
             this = self.combine(this,suffix)
         
         return this
