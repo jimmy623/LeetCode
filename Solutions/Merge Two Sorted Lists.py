@@ -29,10 +29,10 @@ class Solution:
         while l1 != None or l2 != None:
             if head == None:
                 if l1 == None:
-                    head = l2
-                    point = l2
-                    l2 = l2.next
-                elif l2 == None or l1.val < l2.val:
+                    return l2
+                elif l2 == None:
+                    return l1
+                elif l1.val < l2.val:
                     head = l1
                     point = l1
                     l1 = l1.next
