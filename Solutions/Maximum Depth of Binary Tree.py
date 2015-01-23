@@ -9,14 +9,22 @@ class Solution:
     # @param root, a tree node
     # @return an integer
     def maxDepth(self, root):
-        self.max = 0
+        self.max = 1
         if not root:
             return 0
             
         self.iterate(root,1)
+        return self.max
         
     def iterate(self,node,depth):
-        
+        if depth > self.max:
+            self.max = depth
+            
+        if node.left:
+            self.iterate(node.left,depth + 1)
+            
+        if node.right:
+            self.iterate(node.right,depth+1)
         
         
 #Maximum Depth of Binary Tree
