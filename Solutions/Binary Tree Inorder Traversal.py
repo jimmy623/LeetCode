@@ -16,8 +16,17 @@ class Solution:
         nodes = []
         nodes.append(root)
         while len(nodes):
-            
-        
+            n = nodes[-1]
+            if n.left != None:
+                nodes.append(n.left)
+                n.left = None
+                continue
+            else:
+                result.append(n.val)
+                nodes.remove(n)
+                if n.right != None:
+                    nodes.append(n.right)
+        return result      
         
 #Binary Tree Inorder Traversal
 #https://oj.leetcode.com/problems/binary-tree-inorder-traversal/
