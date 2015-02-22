@@ -13,6 +13,8 @@ class Solution:
             c = start[length]
             for i in range(1,n):
                 word = strs[i]
+                if length >= len(word):
+                    return start[0:length]
                 if not word[length] == c:
                     return start[0:length]
             length += 1
