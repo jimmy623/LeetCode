@@ -3,20 +3,20 @@ class Solution:
     def isValid(self, s):
         stack = []
         for c in s:
-            if c == "(" or c == "[" orc == "{":
+            if c == "(" or c == "[" or c == "{":
                 stack.append(c)
             elif c == ")":
-                if len(stack) and stack[-1] == ")":
+                if len(stack) and stack[-1] == "(":
                     stack.pop()
                 else:
                     return False
             elif c == "]":
-                if len(stack) and stack[-1] == ")":
+                if len(stack) and stack[-1] == "[":
                     stack.pop()
                 else:
                     return False
             elif c == "}":
-                if len(stack) and stack[-1] == ")":
+                if len(stack) and stack[-1] == "{":
                     stack.pop()
                 else:
                     return False
