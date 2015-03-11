@@ -8,12 +8,14 @@ class Solution:
         dp = [999999 for i in range(n+1)]
         dp[n - 1] = 1; 
         for i in range(m-1,-1,-1):
+            print dp
             for j in range(n-1,-1,-1):
                 k = min(dp[j], dp[j + 1]) - dungeon[i][j]
                 if k <= 0:
                     dp[j] = 1
                 else:
                     dp[j] = k
+        print dp
         return dp[0];
 
 s = Solution()
