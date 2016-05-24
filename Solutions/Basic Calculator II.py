@@ -24,6 +24,10 @@ class Solution(object):
                 stack.append(c)
             elif c == "-":
                 stack.append(c)
+            elif c == "*":
+                stack.append(c)
+            elif c == "/":
+                stack.append(c)
             else:
                 number = 0
                 if (len(stack)):
@@ -37,21 +41,29 @@ class Solution(object):
         return self.consume(stack)
 
     def consume(self,add):
-        number = add[0]
-        for j in range(1,len(add)):
-            if type(add[j]) is int:
-                if add[j-1] == "+":
-                    number += add[j]
+        b = list(add)
+        i = 0
+        while i < len(b):
+            if b[i] == "*":
+                b[i-1] = b[i-1] * b[i+1]
+                b = b[:i] + b[i+2:]
+            elif b[i] == "/":
+                b[i-1] = b[i-1] / b[i+1]
+                b = b[:i] + b[i+2:]
+            else:
+                i += 1
+        number = b[0]
+        for j in range(1,len(b)):
+            if type(b[j]) is int:
+                if b[j-1] == "+":
+                    number += b[j]
                 else:
-                    number -= add[j]
+                    number -= b[j]
         return number
-
 s = Solution()
-d = "1 + 1"
-d = "(1+(4+5+2)-3)+(6+8)"
+d = " 3+5 / 2 "
+d = "3+2*2"
+d = "2*3*4"
 print s.calculate(d)
-
-
-
-#Basic Calculator
-#https://leetcode.com/problems/basic-calculator/
+#Basic Calculator II
+#https://leetcode.com/problems/basic-calculator-ii/
