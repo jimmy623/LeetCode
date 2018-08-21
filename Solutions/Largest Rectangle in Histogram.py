@@ -11,18 +11,19 @@ class Solution:
         
         i = 1
         while i < n:
-            
             if len(keys) == 0 or height[i] > height[keys[-1]]:
                 keys.append(i)
                 i+=1
                 continue
             else:
+                print i,keys
                 key = keys.pop()
                 length = 1
                 if len(keys) == 0:
                     length = i
                 else:
                     length = i-keys[-1]-1
+                print key,length
                 area = height[key]*length
                 maxArea = max(maxArea,area)
                     
@@ -38,5 +39,5 @@ height = [2,1,5,6,2,3]
 # height = [1,1]
 # height = [2,1,2]
 # 
-# height = [4,2,0,3,2,5]
+height = [4,2,0,3,2,5]
 print s.largestRectangleArea(height)

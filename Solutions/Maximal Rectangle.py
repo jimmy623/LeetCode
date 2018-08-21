@@ -5,8 +5,8 @@ class Solution:
         if len(matrix) == 0:
             return 0
         maxArea = 0
-        m = len(matrix)
-        n = len(matrix[0])
+        m = len(matrix) #vertical
+        n = len(matrix[0]) #horizontal
         left = [0 for i in range(n)]
         right = [n for i in range(n)]
         height = [0 for i in range(n)]
@@ -33,16 +33,16 @@ class Solution:
                 else:
                     right[j] = n
                     cur_right = j
-            print left
-            print right
-            print height
+            print "left",left
+            print "right",right
+            print "height",height
             for j in range(n):
                 maxArea = max(maxArea,(right[j]-left[j])*height[j])
         return maxArea     
         
 s = Solution()
 matrix = [["1","1","1","1"],["1","1","1","1"],["1","1","1","1"]]
-matrix = [["0","0","0"],["0","0","0"],["1","1","1"]]
+matrix = [["1","1","0"],["0","1","0"],["1","1","1"]]
 print s.maximalRectangle(matrix)
                 
 #Maximal Rectangle
