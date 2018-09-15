@@ -5,12 +5,9 @@ class NumArray(object):
         :type nums: List[int]
         """
         self.nums = nums
-        # s = 0
-        self.sums = [0 for i in xrange(len(self.nums)+1)]
-        self.end = 0
-        # for n in nums:
-        # 	s += n
-        # 	self.sums.append(s)
+        self.BIT = [0 for _ in xrange(len(nums)+1)]
+        for i,n in enumerate(nums):
+            self.updateBIT(i,n)
 
     def update(self, i, val):
         """
@@ -18,12 +15,27 @@ class NumArray(object):
         :type val: int
         :rtype: void
         """
-        # oVal = self.nums[i]
-        # diff = val -oVal
+        
+        self.updateBIT(i,val - self.get(i))
         self.nums[i] = val
-        self.end = min(self.end,i)
-        # for k in xrange(i+1,len(self.sums)):
-        # 	self.sums[k] += diff
+
+    def get(self,i):
+        return self.nums[i]
+        #return self.getSum(i) - self.getSum(i-1)
+
+    def updateBIT(self,i,val):
+        i+=1
+        while i < len(self.BIT):
+            self.BIT[i] += val
+            i += (i&-i)
+
+    def getSum(self,i):
+        s = 0
+        i += 1
+        while i > 0:
+            s += self.BIT[i]
+            i -= (i&-i)
+        return s
         
 
     def sumRange(self, i, j):
@@ -32,15 +44,16 @@ class NumArray(object):
         :type j: int
         :rtype: int
         """
-        if j+1 > self.end:
-        	s = self.sums[self.end]	
-        	for k in xrange(self.end+1,j+2):
-        		s += self.nums[k-1]
-        		self.sums[k] = s
-        	self.end = j+1
-        return self.sums[j+1] - self.sums[i]
-        # return sum(self.nums[i:j+1])
-        
+        return self.getSum(j) - self.getSum(i-1)
+
+nums = [1, 3, 5]        
+s = NumArray(nums)
+print s.sumRange(0,2)
+print s.getSum(1)
+print s.update(1,2)
+
+print s.sumRange(0,2)
+
 
 
 # Your NumArray object will be instantiated and called as such:
