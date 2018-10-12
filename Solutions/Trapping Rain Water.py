@@ -1,50 +1,35 @@
-class Solution:
-    # @param A, a list of integers
-    # @return an integer
-    def trap(self, A):
-        length = len(A)
-        head = 0
-        tail = length - 1
-        water = 0
-        while head < tail:
-            if A[head] <= A[head + 1]:
-                head += 1
-                continue
-            else:
-                current = A[head]
-                next_high_index = head+1
-                next_high_load = 0
-                next = head+1
-                has_equal_or_higher = False
-                load = 0
-                while next <= tail:
-                    if A[next] > A[next_high_index]:
-                        next_high_index = next
-                        next_high_load = load
-                    if A[next] >= current:
-                        has_equal_or_higher = True
-                        break
-                    else:
-                        load += A[next]
-                        next += 1
+class Solution(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        if not height:
+        	return 0
+        bars = [(height[0],0)]
+        result = 0
+        for i in xrange(1,len(height)):
+        	for j in xrange(len(bars)):
+        		if bars[j][0] < height[i]:
+        			if j > 0:
+        				result += (bars[j][0] - bars[j-1][0]) * (i-bars[j][1]-1)	
+        		else:
+        			if j > 0 and bars[j-1][0] < height[i]:
+        				result += (height[i] - bars[j-1][0]) * (i - bars[j][1]-1)
+        			if bars[j][0] == height[i]:
+        				bars = [(height[i],i)] + bars[j+1:]
+        			else:
+        				bars = [(height[i],i)] + bars[j:]
+        			break
+        	if height[i] > bars[-1][0]:
+        		bars = [(height[i],i)]
+        	elif height[i] < bars[0][0]:
+        		bars = [(height[i],i)] + bars
+        return result
 
-                if has_equal_or_higher:
-                    water += current * (next - head -1) - load
-                    head = next
-                else:
-                    if next_high_index != head+1:
-                        to_add = A[next_high_index] * (next_high_index - head - 1)  - next_high_load
-                        water += to_add
-                        head = next_high_index
-                    else:
-                        head += 1
-        return water
-        
-
-
-A = [2,6,3,8,2,7,2,5,0] 
 s = Solution()
-print "water",s.trap(A)
+print s.trap([0,1,0,2,1,0,1,3,2,1,2,1])
+print s.trap([4,2,3])
 
-#https://oj.leetcode.com/problems/trapping-rain-water/
-#Trapping Rain Water 
+#Trapping Rain Water
+#https://leetcode.com/problems/trapping-rain-water/description/
