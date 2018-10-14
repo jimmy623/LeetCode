@@ -1,33 +1,31 @@
 # Definition for an interval.
-# class Interval:
-#     def __init__(self, s=0, e=0):
-#         self.start = s
-#         self.end = e
+class Interval(object):
+    def __init__(self, s=0, e=0):
+        self.start = s
+        self.end = e
+    def __repr__(self):
+    	return str(self.start)+"|"+str(self.end)
 
-class Solution:
-    # @param intervals, a list of Interval
-    # @return a list of Interval
+class Solution(object):
     def merge(self, intervals):
-        n = len(intervals)
-        if n <= 1:
-            return intervals
-        intervals.sort(key=lambda x:x.start)
+        """
+        :type intervals: List[Interval]
+        :rtype: List[Interval]
+        """
+        if not intervals:
+        	return []
+        intervals.sort(key=lambda e: (e.start,e.end))
+        # print intervals
         result = [intervals[0]]
-        pre = intervals[0]
-        i = 1
-        while i < n:
-            time = intervals[i]
-            if time.start <= pre.end:
-                pre.end = max(time.end,pre.end)
-            else:
-                result.append(time)
-                pre = time
-            
-            i += 1
-            
-            
+        for intv in intervals:
+        	# print intv.start,intv.end,result
+        	if intv.start <= result[-1].end:
+        		result[-1].end = max(intv.end,result[-1].end)
+        	else:
+        		result.append(intv)
         return result
-            
-            
+
+s = Solution()
+print s.merge([Interval(1,4),Interval(1,5)])
 #Merge Intervals
-#https://oj.leetcode.com/problems/merge-intervals/
+#https://leetcode.com/problems/merge-intervals/description/
